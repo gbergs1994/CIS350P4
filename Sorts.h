@@ -63,37 +63,50 @@ public:
         int right = a.size();
 
         if (left + cutoff <= right) {
-            Comparable pivot = (left + right + (a[a.size()/2])) / 3;
+
+            int center = (left + right) / 2;
+            if (a[center] < a[left])
+                swap(a[left], a[center]);
+            if (a[right] < a[left])
+                swap(a[left], a[right]);
+            if (a[right] < a[center])
+                swap(a[center], a[right]);
+            // Place pivot at position right - 1
+            swap(a[center], a[right - 1]);
+            Comparable pivot = a[right - 1];
 
             // Begin partitioning
             int i = left, j = right - 1;
-            for (;;)
-            {
+            for (;;) {
                 while (a[++i] < pivot)
                 {
-                
+                    numberCompares++;
                 }
                 while (pivot < a[--j])
                 {
-
+                    numberCompares++;
                 }
-                if (i < j)
+                if (i < j) {
                     swap(a[i], a[j]);
+                    numberCompares++;
+                }
                 else
                     break;
             }
 
             swap(a[i], a[right - 1]); // Restore pivot
 
-            quicksortWithCutoff(a, cutoff);  // Sort small elements
+            quicksortWithCutoff(a, cutoff); // Sort small elements
             quicksortWithCutoff(a, cutoff); // Sort large elements
             
             return numberCompares;
+            
         }
-    else // Do an insertion sort on the subarray
-        insertionSort(a);
-
+        else // Do an insertion sort on the subarray
+            insertionSort(a);
         
+        
+        return numberCompares;
     }
 
 };

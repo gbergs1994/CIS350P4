@@ -72,7 +72,7 @@ int main()
 	totalQuickCmp = Sorts<int>::quicksortWithoutCutoff (a);
 
 	a = vi2;
-	int cutoff= 5;
+	int cutoff = 5;
 	totalQuickCmp1 = Sorts<int>::quicksortWithCutoff (a, cutoff);
 	cout << "Final sorted array: " <<endl;
 	Display(a);
