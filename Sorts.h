@@ -90,8 +90,8 @@ public:
                 break;
             }
             swap(a[i], a[right - 1]); // Restore pivot
-            //quicksortWithoutCutoff(a); // Sort small elements
-            //quicksortWithoutCutoff(a); // Sort large elements
+            //numberCompares += quicksortWithoutCutoff(a, left, i-1); // Sort small elements
+            //numberCompares += quicksortWithoutCutoff(a, i+1, right); // Sort large elements
             return numberCompares;
     }
 
@@ -146,8 +146,8 @@ public:
             }
             swap(a[i], a[right - 1]); // Restore pivot
             numberCompares++;
-            //quicksortWithCutoff(a, cutoff); // Sort small elements
-            //quicksortWithCutoff(a, cutoff); // Sort large elements
+            numberCompares += (a, left, i - 1, cutoff); // Sort small elements
+            numberCompares+= quicksortWithCutoff(a, i + 1, right, cutoff); // Sort large elements
             return numberCompares;
         }
         else // Do an insertion sort on the subarray
