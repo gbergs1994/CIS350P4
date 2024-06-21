@@ -11,6 +11,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <time.h>
 #include "Sorts.h"
 using namespace std;
 
@@ -33,7 +34,7 @@ int main()
 	vector<int> vi2;
 	vector <int> a;
 
-	int n = 6;
+	int n = 1;
 	// generate a vector 1..n in the sorted order
 	for (int i = 1; i <= n; i++) {
 		vi.push_back(i);
@@ -49,7 +50,7 @@ int main()
 
 		numPerm++;
 
-	} while(next_permutation(vi.begin(),vi.end()));
+	} while(next_permutation(vi.begin(),vi.end()) && numPerm <= 999999); //random subsets <= 1 million to reduce time needed to run experiment
 
 	cout << "Final sorted array: " << endl;
 	Display (a);
@@ -63,22 +64,38 @@ int main()
 	totalCmp = 0;
 	totalQuickCmp = 0;
 
-	//generate an array of size 25 in reverse order
-	for (int i = 25; i > 0; i--) {
-		vi2.push_back(i);
+
+	//generate an array of size 1000000 in random order
+	for (int i = 1000000; i > 0; i--) {
+		int j = rand() % 1000000 + 1; //random integer
+		vi2.push_back(j);
 	}
 
-	a = vi2;
-	totalQuickCmp = Sorts<int>::quicksortWithoutCutoff (a);
+	/*
+	srand(time(0)); 
+	for (int i = 999999; i > 1; i--) {
+	int j = rand() % i + 1; //random integer such that 0 ≤ j ≤ i
+	swap(a[j], a[i]);
+	}
+	*/
+
+
+	//a = vi2;
+	//totalQuickCmp = Sorts<int>::quicksortWithoutCutoff (a);
+
+	clock_t start, finish;
+	start = clock();
 
 	a = vi2;
-	int cutoff = 5;
+	int cutoff = 3;
 	totalQuickCmp1 = Sorts<int>::quicksortWithCutoff (a, cutoff);
 	cout << "Final sorted array: " <<endl;
 	Display(a);
 
-	cout << "Quicksort without cutoff, number of comparisons: " << totalQuickCmp << endl;
+	//cout << "Quicksort without cutoff, number of comparisons: " << totalQuickCmp << endl;
 	cout << "Quicksort with cutoff, number of comparisons: " << totalQuickCmp1 << endl;
+	finish = clock();
+	cout << "Time for sort (seconds): " << ((double)(finish - start))/CLOCKS_PER_SEC << endl;
 
 	return 0;
 }
